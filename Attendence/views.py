@@ -66,7 +66,24 @@ def Attendan(request):
         details.save()
         messages.success(request, 'Attendance Successfully !')
 
+    return render(request,"Employeeprofile.html")    
 
-    return render(request,"Employeeprofile.html")
+def Addemployee(request):
+    if request.method == 'POST':
+        empid = request.POST.get('emp-id')
+        empname = request.POST.get('emp-name')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+        
+        design= request.POST.get('design')
+        passd= request.POST.get('password')
+        details= Employee_Record(Employee_Id=empid,Employee_Name=empname,Phone_No = phone, Email=email, Designation = design,Password=passd)
+        details.save()
+        messages.success(request, 'Attendance Successfully !')
+
+    return redirect('HRloginform')           
+
+
+    
     
 

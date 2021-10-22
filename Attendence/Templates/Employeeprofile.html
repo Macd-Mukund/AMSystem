@@ -190,10 +190,6 @@
                 document.getElementById("breaks").style.display = "block";
                 document.getElementById("2ndhalf").style.display = "block";
 
-              
-
-               
-    
     
             }
             function first_half() {
@@ -202,11 +198,13 @@
                 z.innerHTML=" half Day(1st half) Considered.... ";
                 z.style.width="100px";
 
+                document.getElementById("input1").value = "halfday";
+
                 
                 
             }
-            function leave() {
-                confirm("First you have to Input Today Date then you start clockIn Attendence..Otherwise ClockIn Time Not Recorded");
+            function leave(){
+                
                 alert("Please Informing HR for your Leave with Leave Application(Reasons Mentioned) within 2 hours")
                 var y= document.getElementById("leave");
                 y.disabled=true;
@@ -214,20 +212,15 @@
                 document.getElementById("clockin").style.display = "none";
                 document.getElementById("1sthalf").style.display = "none";
                 document.getElementById("submitt").style.display = "block";
-
-                
-                document.getElementById("input1").style.display = "On Leave";
-                
-                alert("Now Submit Attendance to Save in Records ");
               
             }
             function second_half() {
                 var ab= document.getElementById("2ndhalf");
                 ab.disabled=true;
-                ab.innerHTML=" half Day(2st half) Considered.... ";
-                ab.style.width="100px";
+                ab.innerHTML=" halfDay(2st half) Considered.... ";
+                
                 document.getElementById("submitt").style.display = "block";
-                document.getElementById("input1").style.display = "halfday";
+                document.getElementById("input1").value = "halfday";
     
                 document.getElementById("clockout").style.display = "none";
                 alert("Now Submit Attendance to Save in Records ");
@@ -240,7 +233,6 @@
             }
             function submit() {
                 alert("Attendance Submit Success fully");
-                document.getElementById("input2").style.display = "On Leave";
     
             }
             function breakE() {

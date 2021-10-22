@@ -13,8 +13,6 @@ urlpatterns = [
     path('Employeelogin',views.Employeelogin,name="Employeelogin"),
 
     path('Attendan',views.Attendan,name="Attendan"),
+    path('Addemployee',views.Addemployee,name="Addemployee"),
 
-    
-    #path('addemployee',views.addemployee,name="addemployee"),
-    #path('viewemployee',views.viewemployee,name="viewemployee"),
     ]
