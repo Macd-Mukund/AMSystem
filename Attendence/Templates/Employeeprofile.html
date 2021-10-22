@@ -1,0 +1,321 @@
+
+{% extends 'menu.html' %}
+{% block title %} Employee Profile {% endblock title %}
+{% block span %} Employee Profile {% endblock span %}
+{% block body %}
+
+<style>
+
+
+        #menu {
+            width: 420px;
+            height: 450px;
+            margin-left: 10px;
+            margin-top: 20px;
+            box-shadow: 5px 5px 10px 10px rgb(0, 0, 0, 0.25);
+            background-image: linear-gradient(rgba(221, 160, 221, 0.1), rgba(0, 168, 255, 0.3));
+        }
+
+        #content {
+            width: 970px;
+            height: 450px;
+            position: absolute;
+            top: 120px;
+            left: 450px;
+            box-shadow: 5px 5px 10px 10px rgb(0, 0, 0, 0.25);
+            background-image: linear-gradient(rgba(221, 160, 221, 0.1), rgba(0, 168, 255, 0.3));
+
+        }
+
+        #details {
+            width: 970px;
+            height: 450px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            box-shadow: 5px 5px 10px 10px rgb(0, 0, 0, 0.25);
+            background-image: linear-gradient(rgba(221, 160, 221, 0.1), rgba(0, 168, 255, 0.3));
+            display: none;
+
+        }
+
+        #section {
+       
+        margin: 5px;
+        margin-top: 10px;
+        padding: 10px;
+    }
+
+    .row {
+        border: 2px solid blue;
+        padding: 5px;
+    }
+
+    .col-2 {
+        margin: 5px;
+        padding: 5px;
+        border: 2px solid darkblue;
+    }
+
+        #records {
+            margin: 30px;
+        }
+
+        #form {
+            margin: 30px;
+        }
+    </style>
+
+<h3 style="text-align:center; margin-top:5px; background:#39be80; color:white; padding:5px;">{{employee.Employee_Name}}( {{employee.Designation}} )</h3>
+
+<div id="menu">
+    {% if employee %}
+        <h5 class="text-center alert alert-success mt-2"> Employee Details </h5>
+        <table class="table table-hover table-warning general table-bordered">
+
+            <tbody>
+                <tr class="">
+                    <td class="">Employee Id_Number :-</td>
+                    <td class="">{{employee.Employee_Id}}</td>
+                </tr>
+                <tr class="">
+                    <td class="">Employee Name:- </td>
+                    <td class="">{{employee.Employee_Name}}</td>
+                </tr>
+                <tr class="">
+                    <td class="">Post Designation:- </td>
+                    <td class=""> {{employee.Designation}}</td>
+                </tr>
+                <tr class="">
+                    <td class="">Email:- </td>
+                    <td class="">{{employee.Email}}</td>
+                </tr>
+                <tr class="">
+                    <td class="">Phone_No:- </td>
+                    <td class="">{{employee.Phone_No}}</td>
+                </tr>
+
+                <tr class="">
+                    <td class="">Password:- </td>
+                    <td class="">{{employee.Password}}</td>
+                </tr>
+                
+            </tbody>
+
+        </table>
+
+
+        {% endif %}
+        <a href="Employeeloginform" class="btn btn-success mx-3">Logout</a> 
+    
+</div>
+
+        <div id="content">
+            <div id="records">
+                <form method="post" action="Attendan">{% csrf_token%}
+                    <div class="form-group " style="display: none;">
+                        <input type="text" class="form-control"  
+                        value="{{employee.Employee_Name}}" name="emp-name">
+                    </div>
+                    <div class="form-group mb-3 mt-3" style="display: none;">
+                        <input type="number" class="form-control" value="{{employee.Employee_Id}}" name="emp-id">
+                    </div>
+                    
+    
+                    <div class="form-group mb-3 mt-3" style="display: none;">
+                        <input type="text" class="form-control" id="input1" value="leave" name="attendance"
+                        />
+                    </div>
+                    <div class="form-group mb-3 mt-3" style="display: none;">
+                        <input type="number" class="form-control" id="input2" value="0" name="extrahour"/>
+                    </div>
+                    
+                                     
+                    
+                    
+        <div class="container" id="section">
+            <div class="row">
+                <div class="col-12 p-2">
+                    <h5 class="border-bottom">
+                        Attendance Mark >> 
+                            <input type="datetime-local" value="NULL" placeholder="Today Date"  name="clockin" id="input3"/> 
+                            <span class="text-danger fs-6">**Enter Today date before Marking Attendance</span>
+                    </h5> 
+    
+                </div>
+                <button class="col-2 btn btn-primary" style="display: block;" onclick="clockIn()" 
+                id="clockin"> Clock In
+                </button>
+                <button class="col-2 btn btn-danger" style="display: block;" onclick="leave()" 
+                id="leave">Take Leave
+                </button>
+                <button class="col-2 btn btn-warning" style="display: block;" onclick="first_half()" 
+                id="1sthalf"> Take HalfDay (1st half)
+                </button>
+                <button class="col-2 btn btn-success" style="display: none;" onclick="breakS()"
+                 id="breaks">Break Start
+                </button>
+                <button class="col-2 btn btn-success" style="display: none;" onclick="breakE()"
+                id="breake"> Break End
+                </button>
+                <button class="col-2 btn btn-warning" style="display: none;" onclick="second_half()" 
+                id="2ndhalf"> Take HalfDay (2nd half)
+                </button>
+                <button class="col-2 btn btn-primary" style="display: none;" onclick="clockOut()"
+                id="clockout"> Clock Out
+                </button>
+                
+                <button class="col-2 mx-3 btn-outline-success" style="display: none;" onclick="submit()"
+                type="submit" id="submitt">Submit Attendence</button>
+             </form>
+            </div>
+    
+    
+    
+        </div>
+        <script>
+            
+            
+            function clockIn() {
+
+                confirm("First you have to Input Today Date then you start clockIn Attendence..Otherwise ClockIn Time Not Recorded");
+                
+                alert("Your Attendance Timing Start Now..")
+
+                document.getElementById("input3").disabled = true;
+                document.getElementById("clockin").disabled = true;
+                document.getElementById("leave").style.display = "none";
+                document.getElementById("1sthalf").style.display = "none";
+                document.getElementById("clockout").style.display = "block";
+                document.getElementById("breaks").style.display = "block";
+                document.getElementById("2ndhalf").style.display = "block";
+
+              
+
+               
+    
+    
+            }
+            function first_half() {
+                var z= document.getElementById("1sthalf");
+                z.disabled=true;
+                z.innerHTML=" half Day(1st half) Considered.... ";
+                z.style.width="100px";
+
+                
+                
+            }
+            function leave() {
+                confirm("First you have to Input Today Date then you start clockIn Attendence..Otherwise ClockIn Time Not Recorded");
+                alert("Please Informing HR for your Leave with Leave Application(Reasons Mentioned) within 2 hours")
+                var y= document.getElementById("leave");
+                y.disabled=true;
+                y.innerHTML=" Leave Granted ";
+                document.getElementById("clockin").style.display = "none";
+                document.getElementById("1sthalf").style.display = "none";
+                document.getElementById("submitt").style.display = "block";
+
+                
+                document.getElementById("input1").style.display = "On Leave";
+                
+                alert("Now Submit Attendance to Save in Records ");
+              
+            }
+            function second_half() {
+                var ab= document.getElementById("2ndhalf");
+                ab.disabled=true;
+                ab.innerHTML=" half Day(2st half) Considered.... ";
+                ab.style.width="100px";
+                document.getElementById("submitt").style.display = "block";
+                document.getElementById("input1").style.display = "halfday";
+    
+                document.getElementById("clockout").style.display = "none";
+                alert("Now Submit Attendance to Save in Records ");
+            }
+            function breakS() {
+                alert("Break Started , Please Ended Break Within 10mins");
+                document.getElementById("breaks").disabled=true;
+                document.getElementById("breake").style.display = "block";
+    
+            }
+            function submit() {
+                alert("Attendance Submit Success fully");
+                document.getElementById("input2").style.display = "On Leave";
+    
+            }
+            function breakE() {
+                document.getElementById("breake").disabled=true;
+                document.getElementById("breake").innerHTML="Break Ended";
+                document.getElementById("breaks").style.display = "none";
+    
+    
+            } function clockOut() {
+                var x= document.getElementById("clockout");
+                x.disabled=true;
+                x.innerHTML=" Successfull Clock Out ";
+                x.style.background="green";
+                document.getElementById("2ndhalf").style.display = "none";
+                document.getElementById("submitt").style.display = "block";
+
+                document.getElementById("input1").style.display = "Fullday";
+                alert("Now Submit Attendance to Save in Records ");
+                
+            }
+    
+    
+    
+        </script>
+        {% if record %}
+        <h3>Attendance Record </h3>
+        <table class="table table-success table-striped text-center" style="width: 800px;">
+            <thead
+                <tr>
+                    <th scope="col">Clock In Time</th>
+                    <th scope="col">Clock Out Time</th>
+
+                    <th scope="col">Extra Working Hours</th>
+                    
+                    <th scope="col">Attendance Status</th>
+
+                    
+
+                </tr>
+            </thead>
+            
+                    
+                
+            <tbody>
+
+                {% for i in record%}
+                <tr>
+
+                    <td>{{i.Clockin}}</td>
+                    <td>{{i.Clockout}}</td>
+                    <td>{{i.Extrahours}}</td>
+                    <td>{{i.Attendance}}</td>
+                    
+                </tr>
+               
+                    
+{% endfor %}
+</tbody>
+</table>
+</div>
+    
+</div>
+{% else %}
+<h3>No Records Found </h3>
+{% endif %}
+
+
+
+   
+<script>
+    
+</script>
+
+
+
+
+
+{% endblock body %}
